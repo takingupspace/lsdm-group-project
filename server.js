@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 var cors = require('cors')
+const path = require('path');
 require('dotenv').config()
 
 app.use(bodyParser.json());
@@ -11,9 +12,13 @@ app.use(cors());
 // allows us to parse requests of content-type: application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(express.static(path.join(__dirname, "..", "lsdm-group-project/views")));
+app.set("view engine", "ejs");
+app.set("signin", path.join(__dirname, "signin"));
+
 app.get("/", (req, res) => {
-    res.send("Hello From my Server")
-})
+    return res.render("signin.html");
+  });
 
 require("./server/routes/auth.routes.js")(app);
 
