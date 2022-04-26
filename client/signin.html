@@ -20,10 +20,10 @@
 			<!-- Header -->
 			<!-- TODO: FIX REFERENCES TO OTHER PAGES. USE INDEX.HTML AS A REFERENCE.-->
 				<header id="header">
-					<h1 id="logo"><a href="index.html">Login to use our <span>Dataset</span></a></h1>
+					<h1 id="logo"><a href="signin.html">Login to use our <span>Dataset</span></a></h1>
 					<nav id="nav">
 						<ul>
-							<li class="current"><a href="index.html">Home</a></li>
+							<li class="current"><a href="index.html">Main Page</a></li>
 							<li class="submenu">
 								<ul>
 									<li><a href="query.html">Query Page</a></li>
@@ -44,7 +44,7 @@
 								<!--Form for Login-->
 								<div style="width:25%; padding-top: 1%" class="content">
 									<h3>Login</h3>
-									<form action="http://birdsuphotels.com:3001/login" id="loginPOST">
+									<form action="http://localhost.com:3001/login" id="loginPOST">
 										<div class="row gtr-50">
 
 											<div class="col-12">
@@ -114,7 +114,7 @@
 						if(data.data.isAdmin == 0){
 							//max-age is in seconds, so we set the cookie to expire in n seconds
 							document.cookie = `birds_user_id=${userName}; max-age=900`
-							alert('Your credentials were correct ' + data.data.firstName + ', now redirecting you to the Hotel Search Page')
+							alert('Your credentials were correct ' + data.data.firstName + ', now redirecting you to the Query Page')
 							window.open("index.html", "_self");
 						}
 						if(data.data.isAdmin == 1){
