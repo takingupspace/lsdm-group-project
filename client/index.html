@@ -19,7 +19,19 @@
 				<h1>Covid Analyses</h1>
 				<nav>
 					<ul>
-						<li><a href="./signin.html">Query our Database</a></li>
+						<script>
+							$('#query').mousedown(function(){
+								const userName = ('; '+document.cookie).split(`; birds_user_id=`).pop().split(';')[0];
+								if(userName) window.open("./query/query.html", "_self");
+								else return window.open("./signin.html", "_self");
+							})
+							function checkCookie(){
+								const userName = ('; '+document.cookie).split(`; birds_user_id=`).pop().split(';')[0];
+								if(userName) return "./query/query.html";
+								else return "./signin.html";
+							}
+						</script>
+						<li id="query"><a href="./signin.html">Query our Database</a></li>
 						<li><a href="#intro">Introduction</a></li>
 						<li><a href="#one">About our Dataset</a></li>
 						<li><a href="#two">Visualizations 1</a></li>

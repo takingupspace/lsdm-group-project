@@ -108,13 +108,14 @@
 						*/
 						if(data.message == 'Passwords do not Match or no User with that name on file'){
 						alert(data.message)
-						}
+						}else{
 
 						//redirect after cookie assignment.
 						//max-age is in seconds, so we set the cookie to expire in n seconds
 						document.cookie = `lsdm_user_id=${userName}; max-age=900`
 						alert('Your credentials were correct ' + data.userName + ', now redirecting you to the Query Page')
 						window.open("./query/query.html", "_self");
+						}
 					});
 				}
 				});

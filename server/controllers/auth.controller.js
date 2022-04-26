@@ -15,19 +15,17 @@ exports.signUp = (req, res) => {
 }
 
 exports.signIn = (req, res) => {
-
-    console.log('hi')
     Auth.userLogin(req.body.userName, req.body.password, (err, data) => {
         if(err){
-                res.send({
-                    message: "Passwords do not Match or no User with that name on file"
-                });
+            return res.send({
+            message: "Passwords do not Match or no User with that name on file"
+            });
             }else{
 
             res.cookie("jwt", data, {secure: true, httpOnly: false, maxAge : 60, SameSite: true})
             userName = req.body.userName
 
-            res.send({
+            return res.send({
                 message: `Passwords Match ${req.body.userName}, issuing a token`,
                 data : data,
                 userName : userName
