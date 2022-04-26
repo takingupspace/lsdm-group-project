@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<!--
+	Twenty by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Sign in</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<link rel="stylesheet" href="css/popupform.css" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	</head>
+	<body class="contact is-preload">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+			<!-- TODO: FIX REFERENCES TO OTHER PAGES. USE INDEX.HTML AS A REFERENCE.-->
+				<header id="header">
+					<h1 id="logo"><a href="index.html">Login to use our <span>Dataset</span></a></h1>
+					<nav id="nav">
+						<ul>
+							<li class="current"><a href="index.html">Home</a></li>
+							<li class="submenu">
+								<ul>
+									<li><a href="query.html">Query Page</a></li>
+								</ul>
+							</li>
+							<!--<li><a href="signup.html" class="button primary">Sign Up / Login</a></li>-->
+						</ul>
+					</nav>
+				</header>
+
+			<!-- Main -->
+				<article id="main">
+
+					<!-- One -->
+						<section class="wrapper style4 special container medium">
+
+							<!-- Content -->
+								<!--Form for Login-->
+								<div style="width:25%; padding-top: 1%" class="content">
+									<h3>Login</h3>
+									<form action="http://birdsuphotels.com:3001/login" id="loginPOST">
+										<div class="row gtr-50">
+
+											<div class="col-12">
+												<input type="text" name="userName" placeholder="Email" />
+											</div>
+											<!--CHANGED input type to password to hide password.-->
+											<div class="col-12">
+												<input type="password" name="password" placeholder="Password" />
+											</div>
+										
+											<div class="col-12">
+												<ul class="buttons">
+													<li><input type="submit" class="special" value="Login" /></li>
+												</ul>
+											</div>
+										</div>
+									</form>
+								</div>
+
+						</section>
+
+				</article>
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollgress.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+			<!--Script for getting and submitting POST information from login form.-->
+			<script>
+				$("#loginPOST").submit(function(event){
+					event.preventDefault();
+
+					var $form = $(this)
+					userName = $form.find("input[name='userName']").val(),
+					password = $form.find("input[name='password']").val(),
+					url = $form.attr("action")
+
+					if($form.find("input[name='userName']").val() === ""){
+						alert("You didn't enter a user name!");
+					}else if($form.find("input[name='password']").val() === ""){
+						alert("You didn't enter a password!");
+					}else{
+
+					var login = $.post(url, {
+						userName : userName,
+						password : password,
+					});
+					login.done(function (data){
+						/*
+						Where message is a notification stating that a token was issued.
+						Where data is the session id that was generated on login. 
+						Where userName is the email/username used to login. 
+						*/
+						if(data.message == 'Passwords do not Match or no User with that name on file'){
+						alert(data.message)
+						}
+
+						//redirect after cookie assignment.
+						if(data.data.isAdmin == 0){
+							//max-age is in seconds, so we set the cookie to expire in n seconds
+							document.cookie = `birds_user_id=${userName}; max-age=900`
+							alert('Your credentials were correct ' + data.data.firstName + ', now redirecting you to the Hotel Search Page')
+							window.open("index.html", "_self");
+						}
+						if(data.data.isAdmin == 1){
+							//max-age is in seconds, so we set the cookie to expire in n seconds
+							document.cookie = `birds_user_id=${userName}; max-age=900`
+							alert('Your credentials were correct ' + data.data.firstName + ', now redirecting you to the Admin Panel')
+							window.open("admin_page/index.html", "_self");
+						}
+					});
+				}
+				});
+			</script>
+			<script type="text/javascript">
+				(function(d, m){
+					var kommunicateSettings = 
+						{"appId":"35063c33936dda46d9c6836243547940a","popupWidget":true,"automaticChatOpenOnNavigation":true};
+					var s = document.createElement("script"); s.type = "text/javascript"; s.async = true;
+					s.src = "https://widget.kommunicate.io/v2/kommunicate.app";
+					var h = document.getElementsByTagName("head")[0]; h.appendChild(s);
+					window.kommunicate = m; m._globals = kommunicateSettings;
+				})(document, window.kommunicate || {});
+			/* NOTE : Use web server to view HTML files as real-time update will not work if you directly open the HTML file in the browser. */
+			</script>
+	</body>
+</html>
