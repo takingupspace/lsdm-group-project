@@ -44,7 +44,7 @@
 								<!--Form for Login-->
 								<div style="width:25%; padding-top: 1%" class="content">
 									<h3>Login</h3>
-									<form action="http://localhost.com:3001/login" id="loginPOST">
+									<form action="http://localhost:3001/login" id="loginPOST">
 										<div class="row gtr-50">
 
 											<div class="col-12">
@@ -111,18 +111,10 @@
 						}
 
 						//redirect after cookie assignment.
-						if(data.data.isAdmin == 0){
-							//max-age is in seconds, so we set the cookie to expire in n seconds
-							document.cookie = `birds_user_id=${userName}; max-age=900`
-							alert('Your credentials were correct ' + data.data.firstName + ', now redirecting you to the Query Page')
-							window.open("index.html", "_self");
-						}
-						if(data.data.isAdmin == 1){
-							//max-age is in seconds, so we set the cookie to expire in n seconds
-							document.cookie = `birds_user_id=${userName}; max-age=900`
-							alert('Your credentials were correct ' + data.data.firstName + ', now redirecting you to the Admin Panel')
-							window.open("admin_page/index.html", "_self");
-						}
+						//max-age is in seconds, so we set the cookie to expire in n seconds
+						document.cookie = `lsdm_user_id=${userName}; max-age=900`
+						alert('Your credentials were correct ' + data.userName + ', now redirecting you to the Query Page')
+						window.open("./query/query.html", "_self");
 					});
 				}
 				});

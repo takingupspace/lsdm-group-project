@@ -15,6 +15,8 @@ exports.signUp = (req, res) => {
 }
 
 exports.signIn = (req, res) => {
+
+    console.log('hi')
     Auth.userLogin(req.body.userName, req.body.password, (err, data) => {
         if(err){
                 res.send({
