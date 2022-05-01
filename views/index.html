@@ -34,8 +34,8 @@
 						<li id="query"><a href="./signin.html">Query our Database</a></li>
 						<li><a href="#intro">Introduction</a></li>
 						<li><a href="#one">About our Dataset</a></li>
-						<li><a href="#two">Visualizations 1</a></li>
-						<li><a href="#work">Visualizations 2</a></li>
+						<li><a href="#two">Word Cloud Visualizations</a></li>
+						<li><a href="#work">Sentiment Analysis Visualizations</a></li>
 						<li><a href="#contact">Contact Us</a></li>
 					</ul>
 				</nav>
@@ -48,6 +48,7 @@
 						<h2>Introduction</h2>
 					</header>
 					<p>This project is centered around an originally sized dataset of 12.75 GB. The dataset was originally scraped from reddit.
+						The subreddit (internet forum) utilized for this dataset was solely based on Covid-19 related material.
 						The main piece of information contained within this dataset is the "body" field. This field corresponds to an individual
 						user's post in a particular thread on this subreddit.
 					</p>
@@ -63,7 +64,16 @@
 					<header>
 						<h2>About our dataset</h2>
 					</header>
-					<p>Filler text for now, I want to explain how we're using our dataset to generate our visualizations.</p>
+					<p>We decided to perform a word count and a sentiment analysis on our dataset.
+						We were able to identify that the most important field in this dataset was the "body" column.
+						We decided to extract this column, and to index each individual row with a unique key,
+						corresponding to a unique individual post. The process that we followed was to first
+						perform extensive <strong>data cleaning</strong> across the entire dataset. We performed the data cleaning process
+						in multiple steps, simultaneously performing <strong>EDA (Exploratory Data Analysis)</strong> to make sure that our data made sense.
+						The methodologies used for cleaning our dataset included: converting all text to lower-case, removing brackets, removing punctuation,
+						removing words containing numbers, a few more runs to clean up non-sensical text and additional punctuation, and the last step
+						was to remove stop words. Stop words are words that have little meaning in textual data, such as of, a, and, the, etc.
+					</p>
 				</div>
 				<a href="#two" class="button style2 down anchored">Next</a>
 			</section>
@@ -72,9 +82,27 @@
 			<section id="two" class="main style2 left dark fullscreen">
 				<div class="content box style2">
 					<header>
-						<h2>Visualizations</h2>
+						<h2>Word Cloud Visualizations</h2>
 					</header>
-					<p>Here are some of our visualizations</p>
+					<p>The first form of analyses that we decided to perform is essentially a word count.
+						The process that we followed was to first, iterate through each row and create a new
+						CSV containing an index and a dictionary of the number of times a word was used
+						for each row. We then performed another iteration to extract the word with the highest count,
+						writing the results to a new CSV with an index and a corresponding row that contained one word and its count.
+						Finally, we utilized the matplot and wordcloud Python Libraries to display a word cloud of our dataset's most
+						used words. As a precursor, our total number of rows in this dataset is around 17 million individual rows.
+						The first word cloud displayed on this page includes the first 2 million rows, the second image shows the word count for the first 9 million rows,
+						and the last image shows all 17 million rows.
+					</p>
+				</div>
+				<div class="content box style2">
+					<img height="300" width="500" src="./images/2mill_word_count_cloud.png" title="First 2 million rows word count" />
+				</div>
+				<div class="content box style2">
+					<img height="300" width="500" src="./images/9mill_word_count_cloud.png"title="First 9 million rows word count" />
+				</div>
+				<div class="content box style2">
+					<img height="300" width="500" src="./images/17mill_word_count_cloud.png"title="First 17 million rows word count" />
 				</div>
 				<a href="#work" class="button style2 down anchored">Next</a>
 			</section>
@@ -83,29 +111,28 @@
 			<section id="work" class="main style3 primary">
 				<div class="content">
 					<header>
-						<h2>Visualizations</h2>
-						<p>Here are some more of our visualizations</p>
+						<h2>Sentiment Analysis Visualizations</h2>
+						<p>We used the same dataset that we cleaned for the word cloud. We went from an originally sized 12.75 GB dataset,
+							to around 6.3 GB. For the sentiment analysis we organized the data by it's original row id and its corresponding
+							body column. Next, we iterated through each row and applied a compound sentiment score and added it to the sentiment
+							score column via Panda Dataframes. Each row also has a sentiment type of "compound" applied to it. We then merge the results intro
+							the original data frame. We then output this data frame to a csv file so that we can generate reports in the future. Lastly,
+							we remove neutral sentiment score and classify each sentiment score as either Positive or Negative. The pie charts below
+							show sentiment analyses for the first 100,000 rows, 500,000 rows, and 1,000,000 rows, respectively, from left to right.
+
+						</p>
 					</header>
 
 					<!-- Gallery  -->
 						<div class="gallery">
 							<article class="from-left">
-								<a href="images/fulls/01.jpg" class="image fit"><img src="images/thumbs/01.jpg" title="The Anonymous Red" alt="" /></a>
+								<a href="images/fulls/01.jpg" class="image fit"><img src="./images/100k_sentiment-results.png" title="First 100k Row Sentiment Analysis" alt="" /></a>
 							</article>
 							<article class="from-right">
-								<a href="images/fulls/02.jpg" class="image fit"><img src="images/thumbs/02.jpg" title="Airchitecture II" alt="" /></a>
+								<a href="images/fulls/02.jpg" class="image fit"><img src="./images/500k_sentiment-results.png" title="First 500k Row Sentiment Analysis" alt="" /></a>
 							</article>
 							<article class="from-left">
-								<a href="images/fulls/03.jpg" class="image fit"><img src="images/thumbs/03.jpg" title="Air Lounge" alt="" /></a>
-							</article>
-							<article class="from-right">
-								<a href="images/fulls/04.jpg" class="image fit"><img src="images/thumbs/04.jpg" title="Carry on" alt="" /></a>
-							</article>
-							<article class="from-left">
-								<a href="images/fulls/05.jpg" class="image fit"><img src="images/thumbs/05.jpg" title="The sparkling shell" alt="" /></a>
-							</article>
-							<article class="from-right">
-								<a href="images/fulls/06.jpg" class="image fit"><img src="images/thumbs/06.jpg" title="Bent IX" alt="" /></a>
+								<a href="images/fulls/03.jpg" class="image fit"><img src="./images/1mill_sentiment-results.png" title="First 1 Million Row Sentiment Analysis" alt="" /></a>
 							</article>
 						</div>
 
