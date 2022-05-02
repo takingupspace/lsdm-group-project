@@ -21,6 +21,7 @@ app.get("/", (req, res) => {
   });
 
 require("./server/routes/auth.routes.js")(app);
+require("./server/routes/query.routes")(app);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {

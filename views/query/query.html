@@ -8,9 +8,11 @@
 	<head>
 		<title>Query our Data to Generate Reports</title>
 		<meta charset="utf-8" />
+		<link rel="stylesheet" href="./assets/bootstrap-3.3.7-dist/css/bootstrap.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	</head>
 	<body class="is-preload">
 
@@ -21,7 +23,7 @@
 					<p>The purpose of this page is to allow the user to query the dataset to use for reporting.</p>
 					<ul class="actions">
 						<li><a href="../index.html" class="button primary icon solid fa-download">Go Back to Main Page</a></li>
-						<li><a href="#three" class="button icon solid fa-chevron-down scrolly">Learn More</a></li>
+						<li><a href="#two" class="button icon solid fa-chevron-down scrolly">Learn More</a></li>
 					</ul>
 				</div>
 			</header>
@@ -39,52 +41,73 @@
 				</ul>
 			</section>  -->
 
-		<!-- Two 
+		<!-- Two  -->
 			<section id="two" class="wrapper">
 				<div class="inner alt">
 					<section class="spotlight">
-						<div class="image"><img src="images/pic01.jpg" alt="" /></div>
 						<div class="content">
-							<h3>Magna sed ultrices</h3>
-							<p>Morbi mattis ornare ornare. Duis quam turpis, gravida at leo elementum elit fusce accumsan dui libero, quis vehicula lectus ultricies eu. In convallis amet leo non sapien iaculis efficitur consequat lorem ipsum.</p>
+							<h3>Decide how you want to Query the Dataset</h3>
+							<p>Note: You are able to select an offset, which acts as the starting index to query from. We are implementing pagination to limit the data returned.
+								The limit is automatically set and cannot be adjusted on the front-end.
+							</p>
+							<div id="page-inner">
+								<div id="container">
+								<div class="panel panel-primary">
+								  <div class="panel-heading">Query Form</div>
+									  <div class="panel-body">
+								<form method="post" action="" id="submitForm">
+								  <div class="form-group">
+								  <label>Pick the Table to Query</label>
+								  <select id="databaseid" class="form-select" aria-label="Default select example">
+									<option selected>Open this select menu</option>
+									<option value="sentiment_analysis">Sentiment Analysis Table</option>
+									<option value="word_count">Word Count Analysis Table</option>
+								  </select>
+								  </div>
+								  <div class="form-group">
+								  <label>Enter the Query's Offset Value</label>
+								  <input class="form-control" name="offset" type="text" id="queryoffset" required>
+								  <p class="help-block" id="queryoffsethelp"></p>
+								  </div>
+								  <hr>
+								  <button id="submit" class="btn btn-block btn-success" type="submit">Submit</button>
+								  <script>
+									$('#submitForm').on("submit", function(e){
+									  e.preventDefault();
+									  var table = $('#databaseid').val();
+									  var offset = $("#queryoffset").val();
+									  var getData = $.post("http://localhost:3001/getData",{
+										  table : table,
+										  offset :offset
+									});
+									getData.done(function(data){
+										alert('returned from the server')
+									})
+									})
+								  </script>
+								</form>
+								</div>
+								  </div>
+								</div>
+							  </div>
 						</div>
-					</section>
-					<section class="spotlight">
-						<div class="image"><img src="images/pic02.jpg" alt="" /></div>
-						<div class="content">
-							<h3>Ultrices nullam aliquam</h3>
-							<p>Morbi mattis ornare ornare. Duis quam turpis, gravida at leo elementum elit fusce accumsan dui libero, quis vehicula lectus ultricies eu. In convallis amet leo non sapien iaculis efficitur consequat lorem ipsum.</p>
-						</div>
-					</section>
-					<section class="spotlight">
-						<div class="image"><img src="images/pic03.jpg" alt="" /></div>
-						<div class="content">
-							<h3>Aliquam sed magna</h3>
-							<p>Morbi mattis ornare ornare. Duis quam turpis, gravida at leo elementum elit fusce accumsan dui libero, quis vehicula lectus ultricies eu. In convallis amet leo non sapien iaculis efficitur consequat lorem ipsum.</p>
-						</div>
-					</section>
-					<section class="special">
-						<ul class="icons labeled">
-							<li><span class="icon solid fa-camera-retro"><span class="label">Ipsum lorem accumsan</span></span></li>
-							<li><span class="icon solid fa-sync"><span class="label">Sed vehicula elementum</span></span></li>
-							<li><span class="icon solid fa-cloud"><span class="label">Elit fusce consequat</span></span></li>
-							<li><span class="icon solid fa-code"><span class="label">Lorem nullam tempus</span></span></li>
-							<li><span class="icon solid fa-desktop"><span class="label">Adipiscing amet sapien</span></span></li>
-						</ul>
 					</section>
 				</div>
-			</section>  -->
+			</section>
 
 		<!-- Three -->
 			<section id="three" class="wrapper style2 special">
 				<header class="major">
-					<h2>Generate Reports from our Covid Dataset</h2>
-					<p>It's important to be able to generate insights from datasets, especially large datasets that deal with public opinion.</p>
+					<h2>Query Results</h2>
 				</header>
-				<ul class="actions special">
-					<li><a href="#" class="button primary icon solid fa-download">Download</a></li>
-					<li><a href="#" class="button">Learn More</a></li>
-				</ul>
+				<table class="table table-bordered">
+					<tr><th>Course Number</th><th>Course Name</th><th>Days of Week</th><th>Time of Day</th><th>Room Number</th></tr>
+					<tr><td>CS 4243</td><td>Large-Scale Data Management</td><td>TR</td><td>6-7:15 p.m.</td><td>Peter T. Flawn Building 2.03.12</td></tr>
+					<tr><td>CS 4413</td><td>Web Technologies</td><td>MWF</td><td>10-10:50 a.m.</td><td>North Paseo Building 1.202</td></tr>
+					<tr><td>CS 4683</td><td>Secure Software Dev and Analysis</td><td>MWF</td><td>12-12:50 p.m.</td><td>Business Building 3.04.06</td></tr>
+					<tr><td>CS 4783</td><td>Advanced Software Engineering</td><td>MWF</td><td>2-2:50 p.m.</td><td>Business Building 3.01.12</td></tr>
+					<tr><td>CS 4843</td><td>Cloud Computing</td><td>TR</td><td>7:30-8:45 p.m.</td><td>McKinney Humanities 3.04.08</td></tr>
+				</table>
 			</section>
 
 		<!-- Footer -->
