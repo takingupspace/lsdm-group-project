@@ -7,7 +7,7 @@ require('dotenv').config()
 
 app.use(bodyParser.json());
 
-app.use(cors());
+app.use(cors({credentials: true, origin: true}));
 
 // allows us to parse requests of content-type: application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
