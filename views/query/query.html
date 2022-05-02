@@ -48,7 +48,7 @@
 						<div class="content">
 							<h3>Decide how you want to Query the Dataset</h3>
 							<p>Note: You are able to select an offset, which acts as the starting index to query from. We are implementing pagination to limit the data returned.
-								The limit is automatically set and cannot be adjusted on the front-end.
+								The limit is automatically set and cannot be adjusted on the front-end. The limit is set to 20, so only 20 rows will be returned.
 							</p>
 							<div id="page-inner">
 								<div id="container">
@@ -81,7 +81,56 @@
 										  offset :offset
 									});
 									getData.done(function(data){
-										alert('returned from the server')
+										document.getElementById('showData').innerHTML = "";
+										var row_id = [];
+										var body = [];
+										var sentiment_type = [];
+										var sentiment_score = [];
+										for(var i = 0; i < 20; i++){
+											row_id.push(data.data[i].row_id);
+											body.push(data.data[i].body);
+											sentiment_type.push(data.data[i].sentiment_type);
+											sentiment_score.push(data.data[i].sentiment_score);
+										}
+										var table = document.createElement("table");
+
+										table.classList.add("table");
+										table.classList.add("table-bordered");
+
+										var tableRow = table.insertRow(-1); // insert a new row at [0][0]
+
+										var tableHeader = document.createElement('th'); // header for propId
+										tableHeader.innerHTML = 'row_id' // set the innerHTML for header of propId
+										tableRow.appendChild(tableHeader);
+
+										var tableHeader = document.createElement('th'); // header for propId
+										tableHeader.innerHTML = 'body'
+										tableRow.appendChild(tableHeader);
+
+										var tableHeader = document.createElement('th'); // header for propId
+										tableHeader.innerHTML = 'sentiment_type'
+										tableRow.appendChild(tableHeader);
+
+										var tableHeader = document.createElement('th'); // header for propId
+										tableHeader.innerHTML = 'sentiment_score'
+										tableRow.appendChild(tableHeader);
+
+										for(i = 0; i < row_id.length; i++){
+											var tableRow = table.insertRow(-1);
+											for(j = 0; j < 1; j++){
+												var tabCell = tableRow.insertCell(-1);
+												tabCell.innerHTML = row_id[i];
+												var tabCell = tableRow.insertCell(-1);
+												tabCell.innerHTML = body[i];
+												var tabCell = tableRow.insertCell(-1);
+												tabCell.innerHTML = sentiment_type[i];
+												var tabCell = tableRow.insertCell(-1);
+												tabCell.innerHTML = sentiment_score[i];
+											}
+										}
+
+										var divContainer = document.getElementById("showData"); // this is just targetting our div with the id of container
+										divContainer.appendChild(table); // and lastly we append our table
 									})
 									})
 								  </script>
@@ -100,14 +149,7 @@
 				<header class="major">
 					<h2>Query Results</h2>
 				</header>
-				<table class="table table-bordered">
-					<tr><th>Course Number</th><th>Course Name</th><th>Days of Week</th><th>Time of Day</th><th>Room Number</th></tr>
-					<tr><td>CS 4243</td><td>Large-Scale Data Management</td><td>TR</td><td>6-7:15 p.m.</td><td>Peter T. Flawn Building 2.03.12</td></tr>
-					<tr><td>CS 4413</td><td>Web Technologies</td><td>MWF</td><td>10-10:50 a.m.</td><td>North Paseo Building 1.202</td></tr>
-					<tr><td>CS 4683</td><td>Secure Software Dev and Analysis</td><td>MWF</td><td>12-12:50 p.m.</td><td>Business Building 3.04.06</td></tr>
-					<tr><td>CS 4783</td><td>Advanced Software Engineering</td><td>MWF</td><td>2-2:50 p.m.</td><td>Business Building 3.01.12</td></tr>
-					<tr><td>CS 4843</td><td>Cloud Computing</td><td>TR</td><td>7:30-8:45 p.m.</td><td>McKinney Humanities 3.04.08</td></tr>
-				</table>
+				<div id="showData"></div>
 			</section>
 
 		<!-- Footer -->
