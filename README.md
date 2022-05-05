@@ -156,7 +156,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-_Our Website Features the following:
+_Our Website Features the following:_
 
 - [ ] Project Scope and General Dataset Information
 - [ ] Word Cloud Visualizations after extensive data cleaning
@@ -204,7 +204,7 @@ Travis Sauer - [@SauerTravis]
 
 Rolando De La Rosa
 
-Project Link: [https://github.com/takingupspace/lsdm-group-project.git]
+Project Link: [http://birdsuphotels.com]
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
