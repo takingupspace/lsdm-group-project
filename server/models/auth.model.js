@@ -23,7 +23,7 @@ Auth.verifySession = (req, result) => {
     })
 }
 
-Auth.createUser = (userName, password, result) => {
+Auth.createUserForLSDM = (userName, password, result) => {
     bcrypt.hash(password, rounds, (error, hash) => {
         if (error) result(null, error)
         else {
@@ -41,7 +41,7 @@ Auth.createUser = (userName, password, result) => {
 
 };
 
-Auth.userLogin = (userName, password, result) => {
+Auth.userLoginForLSDM = (userName, password, result) => {
     sql.query(`SELECT user_name, password from admin_accounts c WHERE c.user_name = '${userName}'`, (err, res) => {
         if(err){
             console.log("error" + err);

@@ -2,8 +2,8 @@ const Auth = require("../models/auth.model.js");
 const jwt = require('jsonwebtoken')
 require('dotenv').config();
 
-exports.signUp = (req, res) => {
-    Auth.createUser(req.body.userName, req.body.password, (err, data) => {
+exports.signUpForLSDM = (req, res) => {
+    Auth.createUserForLSDM(req.body.userName, req.body.password, (err, data) => {
         if(err){
             res.send({
                 message : "This user already exists!"
@@ -14,8 +14,8 @@ exports.signUp = (req, res) => {
     });
 }
 
-exports.signIn = (req, res) => {
-    Auth.userLogin(req.body.userName, req.body.password, (err, data) => {
+exports.signInForLSDM = (req, res) => {
+    Auth.userLoginForLSDM(req.body.userName, req.body.password, (err, data) => {
         if(err){
             return res.send({
             message: "Passwords do not Match or no User with that name on file"

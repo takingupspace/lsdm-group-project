@@ -1,9 +1,9 @@
 module.exports = app => {
     const auth = require("../controllers/auth.controller.js");
     
-    app.post('/login', auth.signIn);
+    app.post('/loginForLSDM', auth.signInForLSDM);
     
-    app.post('/signup', auth.signUp);
+    app.post('/signupForLSDM', auth.signUpForLSDM);
 
     app.post('/verify', auth.verify);
     
