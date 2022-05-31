@@ -23,7 +23,7 @@
 					<p>The purpose of this page is to allow the user to query the dataset to use for reporting.</p>
 					<ul class="actions">
 						<li><a href="../index.html" class="button primary icon solid fa-download">Go Back to Main Page</a></li>
-						<li><a href="#two" class="button icon solid fa-chevron-down scrolly">Learn More</a></li>
+						<li><a href="#two" class="button icon solid fa-chevron-down scrolly">Query Dataset</a></li>
 					</ul>
 				</div>
 			</header>
@@ -61,9 +61,20 @@
 								  <select id="databaseid" class="form-select" aria-label="Default select example">
 									<option selected>Open this select menu</option>
 									<option value="sentiment_analysis">Sentiment Analysis Table</option>
-									<option value="word_count">Word Count Analysis Table</option>
+									<option value="word_count_analysis">Word Count Analysis Table</option>
 								  </select>
 								  </div>
+								  <div class="form-group">
+									<label>Pick the Original Dataset Analysis Table If you chose Sentiment Analysis Table above,
+										or leave blank for word count analysis table</label>
+									<select id="seconddatabaseid" class="form-select" aria-label="Default select example">
+									  <option selected>Open this select menu</option>
+									  <option value="original_dataset">Original Dataset Analysis Table</option>
+									</select>
+									<strong>Note: We were only able to import 71 rows from the original_dataset, so do not exceed
+										an offset of 51, if you want to receive 20 rows in return.
+									</strong>
+									</div>
 								  <div class="form-group">
 								  <label>Enter the Query's Offset Value</label>
 								  <input class="form-control" name="offset" type="text" id="queryoffset" required>
@@ -74,23 +85,72 @@
 								  <script>
 									$('#submitForm').on("submit", function(e){
 									  e.preventDefault();
-									  var table = $('#databaseid').val();
+									  var table = $('#databaseid').val()
 									  var offset = $("#queryoffset").val();
+									  var secondTable = $('#seconddatabaseid').val()
+									  if(secondTable == "original_dataset"){
+
+									  }else secondTable = null
+									  console.log("second table is " + secondTable);
+									  console.log("first table is " + table);
 									  var getData = $.post("http://localhost:3001/getData",{
 										  table : table,
-										  offset :offset
+										  offset :offset,
+										  secondTable : secondTable
 									});
 									getData.done(function(data){
+										if(secondTable == $('#seconddatabaseid').val()){
+											console.log(data.data)
+											document.getElementById('showData').innerHTML = "";
+											var row_id = [];
+											var original_sentiment_score = [];
+											var our_analysis_sentiment_score = [];
+											for(var i = 0; i < 20; i++){
+											row_id.push(data.data[i].original_row_id);
+											original_sentiment_score.push(data.data[i].original_sentiment);
+											our_analysis_sentiment_score.push(data.data[i].our_analysis_sentiment_score);
+											}
+											var table = document.createElement("table");
+
+											table.classList.add("table");
+											table.classList.add("table-bordered");
+
+											var tableRow = table.insertRow(-1); // insert a new row at [0][0]
+
+											var tableHeader = document.createElement('th'); // header for propId
+											tableHeader.innerHTML = 'row_id' // set the innerHTML for header of propId
+											tableRow.appendChild(tableHeader);
+
+											var tableHeader = document.createElement('th'); // header for propId
+											tableHeader.innerHTML = 'original_sentiment_score'
+											tableRow.appendChild(tableHeader);
+
+											var tableHeader = document.createElement('th'); // header for propId
+											tableHeader.innerHTML = 'our_analysis_sentiment_score'
+											tableRow.appendChild(tableHeader);
+
+											for(i = 0; i < row_id.length; i++){
+											var tableRow = table.insertRow(-1);
+											for(j = 0; j < 1; j++){
+												var tabCell = tableRow.insertCell(-1);
+												tabCell.innerHTML = row_id[i];
+												var tabCell = tableRow.insertCell(-1);
+												tabCell.innerHTML = original_sentiment_score[i];
+												var tabCell = tableRow.insertCell(-1);
+												tabCell.innerHTML = our_analysis_sentiment_score[i];
+											}
+										}
+
+										var divContainer = document.getElementById("showData"); // this is just targetting our div with the id of container
+										divContainer.appendChild(table); // and lastly we append our table
+										}else{
 										document.getElementById('showData').innerHTML = "";
+										console.log(data.data)
 										var row_id = [];
 										var body = [];
-										var sentiment_type = [];
-										var sentiment_score = [];
 										for(var i = 0; i < 20; i++){
 											row_id.push(data.data[i].row_id);
 											body.push(data.data[i].body);
-											sentiment_type.push(data.data[i].sentiment_type);
-											sentiment_score.push(data.data[i].sentiment_score);
 										}
 										var table = document.createElement("table");
 
@@ -107,14 +167,6 @@
 										tableHeader.innerHTML = 'body'
 										tableRow.appendChild(tableHeader);
 
-										var tableHeader = document.createElement('th'); // header for propId
-										tableHeader.innerHTML = 'sentiment_type'
-										tableRow.appendChild(tableHeader);
-
-										var tableHeader = document.createElement('th'); // header for propId
-										tableHeader.innerHTML = 'sentiment_score'
-										tableRow.appendChild(tableHeader);
-
 										for(i = 0; i < row_id.length; i++){
 											var tableRow = table.insertRow(-1);
 											for(j = 0; j < 1; j++){
@@ -122,15 +174,12 @@
 												tabCell.innerHTML = row_id[i];
 												var tabCell = tableRow.insertCell(-1);
 												tabCell.innerHTML = body[i];
-												var tabCell = tableRow.insertCell(-1);
-												tabCell.innerHTML = sentiment_type[i];
-												var tabCell = tableRow.insertCell(-1);
-												tabCell.innerHTML = sentiment_score[i];
 											}
 										}
 
 										var divContainer = document.getElementById("showData"); // this is just targetting our div with the id of container
 										divContainer.appendChild(table); // and lastly we append our table
+										}
 									})
 									})
 								  </script>
@@ -155,9 +204,8 @@
 		<!-- Footer -->
 			<footer id="footer">
 				<ul class="icons">
-					<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-					<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-					<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+					<li><a href="https://twitter.com/SauerTravis" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+					<li><a href="https://www.linkedin.com/in/travissauer1/" class="icon brands fa-linkedin"><span class="label">LinkedIn/span></a></li>
 				</ul>
 				<p class="copyright">&copy; Untitled. Credits: <a href="http://html5up.net">HTML5 UP</a></p>
 			</footer>
