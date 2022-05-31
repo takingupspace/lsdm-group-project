@@ -50,7 +50,9 @@
 					<p>This project is centered around an originally sized dataset of 12.75 GB. The dataset was originally scraped from reddit.
 						The subreddit (internet forum) utilized for this dataset was solely based on Covid-19 related material.
 						The main piece of information contained within this dataset is the "body" field. This field corresponds to an individual
-						user's post in a particular thread on this subreddit.
+						user's post in a particular thread on this subreddit. We utilized Python and many of its libraries to perform
+						our data analyses. The main libraries utilized were pandas, re (regex module), string, nltk (Natural Language ToolKit) - specifically stopwords,
+						matplotlib, and wordcloud.
 					</p>
 					<footer>
 						<a href="#one" class="button style2 down">More</a>
@@ -64,7 +66,7 @@
 					<header>
 						<h2>About our dataset</h2>
 					</header>
-					<p>We decided to perform a word count and a sentiment analysis on our dataset.
+					<p>We decided to perform word count and sentiment analyses on our dataset.
 						We were able to identify that the most important field in this dataset was the "body" column.
 						We decided to extract this column, and to index each individual row with a unique key,
 						corresponding to a unique individual post. The process that we followed was to first
@@ -84,13 +86,14 @@
 					<header>
 						<h2>Word Cloud Visualizations</h2>
 					</header>
-					<p>The first form of analyses that we decided to perform is essentially a word count.
+					<p>The first form of analysis that we decided to perform is essentially a word count.
 						The process that we followed was to first, iterate through each row and create a new
 						CSV containing an index and a dictionary of the number of times a word was used
 						for each row. We then performed another iteration to extract the word with the highest count,
 						writing the results to a new CSV with an index and a corresponding row that contained one word and its count.
-						Finally, we utilized the matplot and wordcloud Python Libraries to display a word cloud of our dataset's most
-						used words. As a precursor, our total number of rows in this dataset is around 17 million individual rows.
+						Finally, we utilized the matplotlib and wordcloud Python Libraries to display a word cloud of our dataset's most
+						used words. As a precursor, the total number of rows in this dataset was around 17 million individual rows.
+						This means that there were around 17 million posts extracted from this Covid-19 subreddit.
 						The first word cloud displayed on this page includes the first 2 million rows, the second image shows the word count for the first 9 million rows,
 						and the last image shows all 17 million rows.
 					</p>
