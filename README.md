@@ -82,7 +82,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![The Reddit Report][product-screenshot]](http://theredditreport.com)
 
 This project is centered around an originally sized dataset of 12.75 GB. The dataset was originally scraped from reddit. The subreddit (internet forum) utilized for this dataset was solely based on Covid-19 related material. The main piece of information contained within this dataset is the "body" field. This field corresponds to an individual user's post in a particular thread on this subreddit. 
 
